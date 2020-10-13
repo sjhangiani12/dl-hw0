@@ -53,7 +53,7 @@ matrix copy_matrix(matrix m)
     matrix c = make_matrix(m.rows, m.cols);
     // TODO: 1.1 - Fill in the new matrix
     for(int row = 0; row < m.rows; row++) {
-        for(int col = 0; col < m.cols; cols++) {
+        for(int col = 0; col < m.cols; col++) {
             c.data[row*m.cols + col] = m.data[row*m.cols + col];
         }
     }
@@ -70,7 +70,7 @@ matrix transpose_matrix(matrix m)
     // TODO: 1.2 - Make a matrix the correct size, fill it in
     matrix t = make_matrix(m.cols, m.rows);
 
-    for(int col = 0; col < m.cols; cols++) {
+    for(int col = 0; col < m.cols; col++) {
         for(int row = 0; row < m.rows; row++) {
             t.data[row*m.cols + col] = m.data[row*m.cols + col];
         }
