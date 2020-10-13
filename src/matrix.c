@@ -91,8 +91,6 @@ void axpy_matrix(float a, matrix x, matrix y)
     for(int i = 0; i < x.cols * x.rows; i++) {
         y.data[i] += (a * x.data[i]);
     }
-    
-    // TODO: 1.3 - Perform the weighted sum, store result back in y
 }
 
 
@@ -101,11 +99,16 @@ void axpy_matrix(float a, matrix x, matrix y)
 // returns: new matrix that is the result
 matrix matmul(matrix a, matrix b)
 {
+    assert(a.cols == b.rows);
     matrix c = make_matrix(a.rows, b.cols);
     // TODO: 1.4 - Implement matrix multiplication. Make sure it's fast!
-
-
-
+    for (int i = 0; i < c.rows; i++) {
+        for (int j = 0; j < c.cols; j++) {
+            for (int p = 0; p < a.cols; p++) {
+                c.data[i*c.cols + j] += a.data[i*a.cols + p] * b.data[p*c.cols + j];
+            }
+        }
+    }
     return c;
 }
 
