@@ -50,6 +50,19 @@ void gradient_matrix(matrix m, ACTIVATION a, matrix d)
         for(j = 0; j < m.cols; ++j){
             double x = m.data[i*m.cols + j];
             // TODO: multiply the correct element of d by the gradient
+            if(a == LOGISTIC){
+                d.data[i*m.cols + j] *= (x * (1-x));
+            } else if (a == RELU){
+                if (x <= 0)
+                    d.data[i*m.cols + j] *= (0*x);
+                else
+                    d.data[i*m.cols + j] *= (1*x);
+            } else if (a == LRELU){
+                if (x <= 0)
+                    d.data[i*m.cols + j] *= (0.1*x);
+                else
+                    d.data[i*m.cols + j] *= 1*x;
+            }
         }
     }
 }
