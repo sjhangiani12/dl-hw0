@@ -61,6 +61,14 @@ void backward_connected_layer(layer l, matrix prev_delta)
     matrix out   = l.out[0];
     matrix delta = l.delta[0];
 
+    printf("Dimensions of in: %d rows by %d cols\n", in.rows, in.cols);
+    printf("Dimensions of out: %d rows by %d cols\n", out.rows, out.cols);
+    printf("Dimensions of delta: %d rows by %d cols\n", delta.rows, delta.cols);
+    printf("Dimensions of w: %d rows by %d cols\n", l.w.rows, l.w.cols);
+    printf("Dimensions of dw: %d rows by %d cols\n", l.dw.rows, l.dw.cols);
+    printf("Dimensions of b: %d rows by %d cols\n", l.b.rows, l.b.cols);
+    printf("Dimensions of db: %d rows by %d cols\n", l.db.rows, l.db.cols);
+    
     // TODO: 3.2
     // delta is the error made by this layer, dL/dout
     // First modify in place to be dL/d(in*w+b) using the gradient of activation
