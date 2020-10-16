@@ -9,9 +9,13 @@
 libuwnet*
 uwnet
 mnist
+<<<<<<< HEAD
 mnist.tar.gz
 cifar
 cifar.tar.gz
+=======
+
+>>>>>>> 3ce96df647e8f4a15c444487c01099a3deae8e89
 # OS Generated #
 .DS_Store*
 ehthumbs.db
