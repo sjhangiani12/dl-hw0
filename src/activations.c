@@ -28,7 +28,7 @@ void activate_matrix(matrix m, ACTIVATION a)
             } else if (a == SOFTMAX){
                 m.data[i*m.cols + j] = exp(x);
             }
-            sum += exp(m.data[i*m.cols + j]);
+            sum += (m.data[i*m.cols + j]);
         }
         if (a == SOFTMAX) {
             for(j = 0; j < m.cols; ++j){
@@ -54,14 +54,14 @@ void gradient_matrix(matrix m, ACTIVATION a, matrix d)
                 d.data[i*m.cols + j] *= (x * (1-x));
             } else if (a == RELU){
                 if (x <= 0)
-                    d.data[i*m.cols + j] *= (0*x);
+                    d.data[i*m.cols + j] *= 0;
                 else
-                    d.data[i*m.cols + j] *= (1*x);
+                    d.data[i*m.cols + j] *= 1;
             } else if (a == LRELU){
                 if (x <= 0)
-                    d.data[i*m.cols + j] *= (0.1*x);
+                    d.data[i*m.cols + j] *= 0.1;
                 else
-                    d.data[i*m.cols + j] *= 1*x;
+                    d.data[i*m.cols + j] *= 1;
             }
         }
     }

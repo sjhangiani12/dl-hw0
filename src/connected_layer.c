@@ -61,14 +61,14 @@ void backward_connected_layer(layer l, matrix prev_delta)
     matrix out   = l.out[0];
     matrix delta = l.delta[0];
 
-    printf("Dimensions of in: %d rows by %d cols\n", in.rows, in.cols);
-    printf("Dimensions of out: %d rows by %d cols\n", out.rows, out.cols);
-    printf("Dimensions of delta: %d rows by %d cols\n", delta.rows, delta.cols);
-    printf("Dimensions of w: %d rows by %d cols\n", l.w.rows, l.w.cols);
-    printf("Dimensions of dw: %d rows by %d cols\n", l.dw.rows, l.dw.cols);
-    printf("Dimensions of b: %d rows by %d cols\n", l.b.rows, l.b.cols);
-    printf("Dimensions of db: %d rows by %d cols\n", l.db.rows, l.db.cols);
-    printf("Dimensions of prev_delta: %d rows by %d cols\n", prev_delta.rows, prev_delta.cols);
+    // printf("Dimensions of in: %d rows by %d cols\n", in.rows, in.cols);
+    // printf("Dimensions of out: %d rows by %d cols\n", out.rows, out.cols);
+    // printf("Dimensions of delta: %d rows by %d cols\n", delta.rows, delta.cols);
+    // printf("Dimensions of w: %d rows by %d cols\n", l.w.rows, l.w.cols);
+    // printf("Dimensions of dw: %d rows by %d cols\n", l.dw.rows, l.dw.cols);
+    // printf("Dimensions of b: %d rows by %d cols\n", l.b.rows, l.b.cols);
+    // printf("Dimensions of db: %d rows by %d cols\n", l.db.rows, l.db.cols);
+    // printf("Dimensions of prev_delta: %d rows by %d cols\n", prev_delta.rows, prev_delta.cols);
 
     // TODO: 3.2
     // delta is the error made by this layer, dL/dout
@@ -84,7 +84,7 @@ void backward_connected_layer(layer l, matrix prev_delta)
     // l.dw = l.dw - dL/dw
     
     matrix dL_dw = matmul(transpose_matrix(in), delta);
-    printf("Dimensions of dL_dw: %d rows by %d cols\n", dL_dw.rows, dL_dw.cols);
+    // printf("Dimensions of dL_dw: %d rows by %d cols\n", dL_dw.rows, dL_dw.cols);
     axpy_matrix(-1, dL_dw,l.dw);
     free_matrix(dL_dw);
 
@@ -94,7 +94,7 @@ void backward_connected_layer(layer l, matrix prev_delta)
         // value we have for the previous layers delta, prev_delta.
         
         matrix dL_dIn = matmul(delta, transpose_matrix(l.w));
-        printf("Dimensions of dL_dIn: %d rows by %d cols\n", dL_dIn.rows, dL_dIn.cols);
+        // printf("Dimensions of dL_dIn: %d rows by %d cols\n", dL_dIn.rows, dL_dIn.cols);
         axpy_matrix(1,dL_dIn, prev_delta);
         free_matrix(dL_dIn);
     }
@@ -104,9 +104,6 @@ void backward_connected_layer(layer l, matrix prev_delta)
 void update_connected_layer(layer l, float rate, float momentum, float decay)
 {
     // TODO: 3.3
-    matrix dw_prev = l.dw; 
-    matrix db_prev = l.db;
-    
     // Currently l.dw and l.db store:
     //l.dw = momentum * l.dw_prev - dL/dw
     //l.db = momentum * l.db_prev - dL/db
@@ -122,8 +119,16 @@ void update_connected_layer(layer l, float rate, float momentum, float decay)
     axpy_matrix(rate, l.db, l.b);
 
     // Finally, we want to scale dw and db by our momentum to prepare them for the next round
-    // l.dw *= momentum
-    // l.db *= momentum
+    //l.dw *= momentum
+    //l.db *= momentum
+
+    for(int i = 0; i < l.dw.cols * l.dw.rows; i++) {
+        l.dw.data[i] *= momentum;
+    }
+
+    for(int i = 0; i < l.db.cols * l.db.rows; i++) {
+        l.db.data[i] *= momentum;
+    }
 }
 
 layer make_connected_layer(int inputs, int outputs, ACTIVATION activation)
