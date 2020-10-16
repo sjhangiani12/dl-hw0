@@ -104,22 +104,26 @@ void backward_connected_layer(layer l, matrix prev_delta)
 void update_connected_layer(layer l, float rate, float momentum, float decay)
 {
     // TODO: 3.3
+    matrix dw_prev = l.dw; 
+    matrix db_prev = l.db;
+    
     // Currently l.dw and l.db store:
-    // l.dw = momentum * l.dw_prev - dL/dw
-    // l.db = momentum * l.db_prev - dL/db
+    //l.dw = momentum * l.dw_prev - dL/dw
+    //l.db = momentum * l.db_prev - dL/db
 
     // For our weights we want to include weight decay:
     // l.dw = l.dw - decay * l.w
+    axpy_matrix(-1*decay, l.w, l.dw);
 
     // Then for both weights and biases we want to apply the updates:
     // l.w = l.w + rate*l.dw
     // l.b = l.b + rade*l.db
-
+    axpy_matrix(rate, l.dw, l.w);
+    axpy_matrix(rate, l.db, l.b);
 
     // Finally, we want to scale dw and db by our momentum to prepare them for the next round
     // l.dw *= momentum
     // l.db *= momentum
-
 }
 
 layer make_connected_layer(int inputs, int outputs, ACTIVATION activation)
