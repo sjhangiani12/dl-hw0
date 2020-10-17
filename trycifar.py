@@ -16,10 +16,17 @@ print("done")
 print
 
 print("making model...")
-batch = 128
+#Original
+#batch = 128
+#iters = 5000
+#rate = .01
+#momentum = .9
+#decay = .0
+
+batch = 256
 iters = 5000
-rate = .01
-momentum = .9
+rate = .002
+momentum = .97
 decay = .0
 
 m = softmax_model()
